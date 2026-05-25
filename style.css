@@ -17,10 +17,12 @@ body {
 
   height: 100vh;
   flex-direction: column;
+
+   transition: background 2s ease;
 }
 
 #background {
-
+  transition: background 2s ease;
   position: fixed;
 
   top: 0;
@@ -111,46 +113,6 @@ body {
 
 }
 
-.memory-error {
-
-  font-size: 40px;
-
-  color: red;
-
-  font-weight: bold;
-
-  text-transform: uppercase;
-
-  letter-spacing: 5px;
-
-  animation: glitch 0.2s infinite;
-
-}
-
-@keyframes glitch {
-
-  0% {
-    transform: translate(0px);
-  }
-
-  25% {
-    transform: translate(-2px, 2px);
-  }
-
-  50% {
-    transform: translate(2px, -2px);
-  }
-
-  75% {
-    transform: translate(-2px, -2px);
-  }
-
-  100% {
-    transform: translate(0px);
-  }
-
-}
-
 .scared {
 
   animation: scaredShake 0.5s infinite;
@@ -233,19 +195,54 @@ body {
 }
 
 #choices {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  gap: 12px;
-
-  margin-top: 20px;
 
   width: 100%;
 
-  position: relative;
-  z-index: 10;
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 20px;
+
+  margin-top: 40px;
+  
 }
+
+.choice-btn {
+
+  width: 450px;
+
+  min-height: 70px;
+
+  padding: 18px;
+
+  border: none;
+
+  border-radius: 30px;
+
+  font-size: 20px;
+
+  background: white;
+
+  color: black;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.3s,
+    background 0.3s;
+
+}
+
+.choice-btn:hover {
+
+  transform: scale(1.03);
+
+  background: rgb(230,230,230);
+
+}
+
 
 #circle {
   z-index: 5;
