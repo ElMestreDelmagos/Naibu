@@ -36,27 +36,23 @@ function setDialogue(text) {
   dialogue.innerHTML = text;
 }
 
-function setChoices(options) {
+function setChoices(choicesArray) {
 
   choices.innerHTML = "";
 
-  options.forEach(option => {
+  choicesArray.forEach(choice => {
 
-    const btn = document.createElement("button");
+    const button =
+      document.createElement("button");
 
-    btn.innerText = option.text;
+    button.innerText = choice.text;
 
-    btn.onclick = () => {
+    button.onclick = choice.action;
 
-      // remove apenas o botão clicado
-      btn.remove();
+    // CLASSE
+    button.classList.add("choice-btn");
 
-      // executa a ação
-      option.action();
-
-    };
-
-    choices.appendChild(btn);
+    choices.appendChild(button);
 
   });
 
@@ -87,19 +83,32 @@ function scene11() {
 
   choices.innerHTML = "";
 
-  setDialogue(`
-    Oh, eu não me apresentei ainda, foi mal!
-    <br><br>
-    Eu sou Naibu.
-    <br><br>
-    Aquele velho ranzinza falou muito sobre você!
-  `);
+
+    setDialogue(`
+     Oh, eu não me apresentei? foi mal!
+    `);
+
+  setTimeout(() => {
+
+    setDialogue(`
+     Eu sou Naibu.
+    `);
+
+  }, 3000);
+
+  setTimeout(() => {
+
+    setDialogue(`
+     Aquele velho ranzinza falou muito sobre você!
+    `);
+
+  }, 6000);
 
   setTimeout(() => {
 
     neutralScene();
 
-  }, 8000);
+  }, 10000);
 
 }
 
@@ -213,14 +222,16 @@ function scene12() {
 
   function startPress() {
 
-    pressTimer = setTimeout(() => {
+  pressTimer = setTimeout(() => {
 
-      energyScene();
+    // limpa o texto imediatamente
+    setDialogue("");
 
-    }, 3000);
+    energyScene();
 
-  }
+  }, 3000);
 
+}
   function cancelPress() {
 
     clearTimeout(pressTimer);
@@ -248,69 +259,120 @@ function energyScene() {
 
   }, 1800);
 
-  // primeira fala
-  setTimeout(() => {
 
-    setDialogue(`
-      Tenho que lhe dizer, ${playerName}...
-      <br><br>
-      Você tem uma energia muito bonita!
-    `);
-
-  }, 3000);
+  // PRIMEIRA FALA
+setTimeout(() => {
 
   setDialogue(`
     Tenho que lhe dizer, ${playerName}...
-    <br><br>
+  `);
+
+}, 0);
+
+// SEGUNDA FALA
+setTimeout(() => {
+
+  setDialogue(`
     Você tem uma energia muito bonita!
   `);
 
   // tremidinha feliz
-  setTimeout(() => {
+  circle.classList.add("shake");
 
-    circle.classList.add("shake");
+}, 4000);
 
-  }, 1000);
+// TERCEIRA FALA
+setTimeout(() => {
 
-  // segunda fala
-  setTimeout(() => {
+  setDialogue(`
+    Apesar que essa cor não combina tanto com sua energia...
+  `);
 
-    setDialogue(`
-      Apesar que essa cor não combina tanto com sua energia...
-      <br><br>
-      Imaginei que seria uma cor pastel...
-      <br><br>
-      Mais alegre...
-      <br><br>
-      Mas...
-      <br><br>
-      Vermelho vibrante?
-    `);
-    
+  // reação surpresa
+  circle.innerHTML = `
+    <div id="emoji">?</div>
+  `;
 
-    // reação surpresa
-    circle.innerHTML = `
-      <div id="emoji">?</div>
-    `;
+}, 9000);
 
-  }, 6000);
+// QUARTA FALA
+setTimeout(() => {
 
-  // terceira fala
-  setTimeout(() => {
+    // MUDA COR
+  document.body.style.background = "#8CBD8C";
+  background.style.background = "#8CBD8C";
 
-    circle.innerHTML = `
-      <div id="emoji">!</div>
-    `;
+  setDialogue(`
+    Imaginei que seria uma cor pastel...
+  `);
 
-    setDialogue(`
-      Você deve ser muito intensa, certo?
-      <br><br>
-      Sentir tudo com certa profundidade...
-      <br><br>
-      Você é mais incrível do que eu pensava!
-    `);
+}, 14000);
 
-  }, 13000);
+// QUINTA FALA
+setTimeout(() => {
+    // MUDA COR
+  document.body.style.background = "#f9a056";
+  background.style.background = "#f9a056";
+
+  setDialogue(`
+    Mais alegre...
+  `);
+
+}, 17000);
+
+// SEXTA FALA
+setTimeout(() => {
+    // MUDA COR
+  document.body.style.background = "black";
+  background.style.background = "black";
+
+  setDialogue(`
+    Mas...
+  `);
+
+}, 19000);
+
+// SÉTIMA FALA
+setTimeout(() => {
+    // VOLTA AO VERMELHO
+  document.body.style.background = "#a00000";
+  background.style.background = "#a00000";
+  setDialogue(`
+    Vermelho vibrante?
+  `);
+
+}, 22000);
+
+// OITAVA FALA
+setTimeout(() => {
+
+  circle.innerHTML = `
+    <div id="emoji">!</div>
+  `;
+
+  setDialogue(`
+    Você deve ser muito intensa, certo?
+  `);
+
+}, 26000);
+
+// NONA FALA
+setTimeout(() => {
+
+  setDialogue(`
+    Sentir tudo com certa profundidade...
+  `);
+
+}, 30000);
+
+// DÉCIMA FALA
+setTimeout(() => {
+
+  setDialogue(`
+    Você é mais incrível do que eu pensava!
+  `);
+
+}, 34000);
 
   // quarta fala
   setTimeout(() => {
@@ -319,22 +381,26 @@ function energyScene() {
 
     setDialogue(`
       Mas não estou aqui para isso!
-      <br><br>
+    `);
+
+  }, 37000);
+
+  setTimeout(() => {
+
+    circle.innerHTML = "";
+
+    setDialogue(`
       O velho me deu a missão de lhe entregar isso.
     `);
 
-  }, 19000);
+  }, 40000);
 
   // envelope aparece
   setTimeout(() => {
 
     envelope.style.display = "flex";
 
-    setDialogue(`
-      Pode abrir!
-    `);
-
-  }, 24000);
+  }, 40000);
 
 }
 
@@ -360,11 +426,23 @@ closeLetter.onclick = () => {
 
   setDialogue(`
     Espero que tenha gostado da coisa...
-    <br><br>
+  `);
+
+  setTimeout(() => {
+
+    setDialogue(`
     Foi bom te conhecer, gostei da sua energia, ${playerName}.
-    <br><br>
+  `);
+
+  }, 4000);
+
+  setTimeout(() => {
+
+    setDialogue(`
     Se cuida.
   `);
+
+  }, 6000);
 
   choices.innerHTML = "";
 
@@ -378,9 +456,9 @@ closeLetter.onclick = () => {
         ...
       `);
 
-    }, 2000);
+    }, 3000);
 
-  }, 5000);
+  }, 9000);
 
 };
 
@@ -391,18 +469,42 @@ talkNaibu.onclick = () => {
   envelope.style.display = "none";
 
   circle.style.opacity = "1";
-
+   
   setDialogue(`
     Ah?!
-    <br><br>
-    Você quer continuar falando comigo?
-    <br><br>
-    Pensei que iria embora depois da carta...
-    <br><br>
-    Hm...
-    <br><br>
-    Você tem perguntas para mim?
   `);
+
+    setTimeout(() => {
+
+      setDialogue(`
+        Você quer continuar falando comigo?
+      `);
+
+    }, 3000);
+
+    setTimeout(() => {
+
+      setDialogue(`
+        Pensei que iria embora depois da carta...
+      `);
+
+    }, 6000);
+
+    setTimeout(() => {
+
+      setDialogue(`
+        Hm...
+      `);
+
+    }, 9000);
+
+    setTimeout(() => {
+
+      setDialogue(`
+        Você tem perguntas para mim?
+      `);
+
+    
 
   setChoices([
 
@@ -427,6 +529,7 @@ talkNaibu.onclick = () => {
     }
 
   ]);
+  }, 11000);
 
 };
 
@@ -434,13 +537,37 @@ function oldManQuestion() {
 
   setDialogue(`
     Hm...
-    <br><br>
-    Aquele homem vive há anos no nosso mundo, muito mais do que você possa pensar...
-    <br><br>
-    Mas a história é muito longa, as únicas coisas que posso dizer é que...
-    <br><br>
-    Eu devo a ele e ele realmente gosta muito de você.
   `);
+
+  setTimeout(() => {
+
+      setDialogue(`
+        Aquele homem vive há anos no nosso mundo, muito mais do que você possa pensar...
+      `);
+
+    }, 3000);
+
+    setTimeout(() => {
+
+      setDialogue(`
+        Mas a história é muito longa, as únicas coisas que posso dizer é que...
+      `);
+
+    }, 7000);
+
+    setTimeout(() => {
+
+      setDialogue(`
+        Eu devo a ele e ele realmente gosta muito de você.
+        `);
+    }, 9000);
+
+    setTimeout(() => {
+
+      setDialogue(`
+        ...
+        `);
+    }, 12000);
 
 }
 
@@ -448,15 +575,46 @@ function naibuQuestion() {
 
   setDialogue(`
     Eu?
-    <br><br>
-    Boa pergunta...
-    <br><br>
-    É mais fácil eu dizer o que não sou! 
-    <br><br>
-    Eu não sou um humano, mas já fui um. Também não sou uma alma. 
-    <br><br>
-    Eu vivo entre os dois mundos.
   `);
+
+  setTimeout(() => {
+
+      setDialogue(`
+        Boa pergunta...
+      `);
+
+    }, 3000);
+
+    setTimeout(() => {
+
+      setDialogue(`
+        Bem... É mais fácil eu dizer o que não sou! 
+      `);
+
+    }, 6000);
+
+    setTimeout(() => {
+
+      setDialogue(`
+        Eu não sou um humano, mas já fui um. Também não sou uma alma. 
+      `);
+
+    }, 10000);
+
+    setTimeout(() => {
+
+      setDialogue(`
+        Eu vivo entre os dois mundos.
+      `);
+
+    }, 14000);
+
+    setTimeout(() => {
+
+      setDialogue(`
+        ...
+        `);
+    }, 17000);
 
 }
 
@@ -464,12 +622,30 @@ function seeAgainQuestion() {
 
   setDialogue(`
     Talvez.
-    <br><br>
-    Se o velho pedir...
-    <br><br>
-    Eu apareço.
   `);
 
+    setTimeout(() => {
+
+      setDialogue(`
+        Se o velho pedir...
+      `);
+
+    }, 3000);
+
+    setTimeout(() => {
+
+      setDialogue(`
+        Eu apareço.
+      `);
+
+    }, 6000);
+
+    setTimeout(() => {
+
+      setDialogue(`
+        ...
+        `);
+    }, 9000);
 }
 
 function goodbyeNaibu() {
@@ -478,11 +654,23 @@ function goodbyeNaibu() {
 
   setDialogue(`
     Certo...
-    <br><br>
-    Então essa é nossa despedida.
-    <br><br>
-    Se cuida, ${playerName}.
   `);
+
+  setTimeout(() => {
+
+      setDialogue(`
+        Então essa é nossa despedida.
+      `);
+
+    }, 3000);
+
+    setTimeout(() => {
+
+      setDialogue(`
+         Se cuida, ${playerName}.
+      `);
+
+    }, 6000);
 
   setTimeout(() => {
 
@@ -494,9 +682,9 @@ setTimeout(() => {
 
   secretArea.style.display = "flex";
 
-}, 1000);
+}, 8000);
 
-  }, 3000);
+  }, 10000);
 
 }
 
@@ -552,8 +740,6 @@ function startIntro() {
 
     setDialogue(`
       Oh, você chegou!
-      <br><br>
-      Eu acho...
     `);
 
   }, 5000);
@@ -561,17 +747,45 @@ function startIntro() {
   setTimeout(() => {
 
     setDialogue(`
+      Eu acho...
+    `);
+
+  }, 8000);
+
+  setTimeout(() => {
+
+    setDialogue(`
       Eu...
-      <br><br>
+    `);
+
+  }, 11000);
+
+  setTimeout(() => {
+
+    setDialogue(`
       Não enxergo.
-      <br><br>
+    `);
+
+  }, 15000);
+
+  setTimeout(() => {
+
+    setDialogue(`
+      Ér... Deixando isso de lado...
+    `);
+
+  }, 17000);
+
+  setTimeout(() => {
+
+    setDialogue(`
       Você poderia me dizer o seu...
       nome?
     `);
 
     nameInputArea.style.display = "flex";
 
-  }, 9000);
+  }, 21000);
 
 }
 
@@ -618,9 +832,14 @@ function scene3() {
 
   setDialogue(`
     Então seu nome é Analice mesmo...
-    <br><br>
-    Que fofo.
   `);
+  setTimeout(() => {
+
+    setDialogue(`
+      Que fofo.
+    `);
+
+  }, 4000);
 
   setTimeout(() => {
 
@@ -630,15 +849,15 @@ function scene3() {
       “Minha Muie” para se referir a você!
     `);
 
-  }, 5000);
+  }, 7000);
 
   setTimeout(() => {
 
     resetCircle();
 
-startOriginalStory();
+    startOriginalStory();
 
-  }, 11000);
+  }, 13000);
 
 }
 
@@ -648,11 +867,23 @@ function scene31() {
 
   setDialogue(`
     Então seu nome é realmente “Muie”?
-    <br><br>
-    hm...
-    <br><br>
-    Eu não devia ter questionado o Velho...
   `);
+
+  setTimeout(() => {
+
+    setDialogue(`
+      hm...
+    `);
+
+  }, 4000);
+
+  setTimeout(() => {
+
+    setDialogue(`
+      Eu não devia ter questionado o Velho...
+    `);
+
+  }, 6000);
 
   setTimeout(() => {
 
@@ -660,7 +891,7 @@ function scene31() {
 
     startOriginalStory();
 
-  }, 9000);
+  }, 10000);
 
 }
 
@@ -678,7 +909,7 @@ setTimeout(() => {
     Tipo aquelas que as pessoas cultuam?
   `);
 
-}, 3000);
+}, 4000);
 
 setTimeout(() => {
 
@@ -686,7 +917,7 @@ setTimeout(() => {
     Estou lisonjeada em te conhecer.
   `);
 
-}, 6000);
+}, 7000);
 
 setTimeout(() => {
 
@@ -694,7 +925,7 @@ setTimeout(() => {
     O próprio Velho diz lhe cultuar em segredo...
   `);
 
-}, 9000);
+}, 12000);
 
   setTimeout(() => {
 
@@ -702,7 +933,7 @@ setTimeout(() => {
       Apesar que agora não é mais segredo...
     `);
 
-  }, 12000);
+  }, 16000);
 
   setTimeout(() => {
 
@@ -710,7 +941,7 @@ setTimeout(() => {
 
     startOriginalStory();
 
-  }, 15000);
+  }, 20000);
 
 }
 
@@ -776,39 +1007,55 @@ setTimeout(() => {
 
   circle.style.transform = "scale(1)";
 
-  startOriginalStory();
+    resetCircle();
+
+    startOriginalStory();
 
 }, 15000);
 
 }
 
 function scene4() {
-
+  
   nameInputArea.style.display = "none";
 
   setDialogue(`
     Desculpe...
-    <br><br>
-    Não era para você estar aqui.
   `);
 
+setTimeout(() => {
+
+  setDialogue(`
+    Mas não era para você estar aqui.
+  `);
+
+}, 4000);
+
+  // FLASH
   setTimeout(() => {
 
     flash.classList.add("flash-animation");
 
-  }, 3000);
+  }, 6000);
+
+  // CLÍMAX
+  setTimeout(() => {
+
+    // SOME TUDO
+    dialogue.style.display = "none";
+    circle.style.background = "none";
+    circle.style.boxShadow = "none";
+
+  }, 6500);
 
   setTimeout(() => {
 
-    circle.style.opacity = "0";
+    alerta();
+    
+  }, 8000);
 
-    dialogue.innerHTML = `
-      <div class="memory-error">
-        SUA MEMÓRIA FOI APAGADA
-      </div>
-    `;
 
-  }, 5000);
+  
 
 }
 
@@ -853,3 +1100,7 @@ function resetCircle() {
 
 }
 
+function alerta()
+{
+alert("Sua memória foi apagada.");
+}
